@@ -48,7 +48,7 @@ public class StickyHeaderBehavior extends StickyViewBehavior {
         }
         BaseBrick header = adapter.getSectionHeader(adapterPosHere);
         //Header cannot be sticky if it's also an Expandable in collapsed status, RV will raise an exception
-        if (header == null) {
+        if (header == null || adapterPosHere == 0) {
             stickyScrollMode = StickyScrollMode.SHOW_ON_SCROLL;
             return RecyclerView.NO_POSITION;
         } else {

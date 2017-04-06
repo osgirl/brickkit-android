@@ -62,13 +62,14 @@ public class StickyFooterBehavior extends StickyViewBehavior {
     @Override
     protected int getStickyViewPosition(int adapterPosHere) {
         BrickRecyclerAdapter adapter = brickDataManager.getBrickRecyclerAdapter();
+        int adapterSize = adapter.getItemCount();
         if (adapterPosHere == RecyclerView.NO_POSITION) {
             View lastChild = adapter.getRecyclerView().getChildAt(adapter.getRecyclerView().getChildCount() - 1);
             adapterPosHere = adapter.getRecyclerView().getChildAdapterPosition(lastChild);
         }
         BaseBrick footer = adapter.getSectionFooter(adapterPosHere);
         //Footer cannot be sticky if it's also an Expandable in collapsed status, RV will raise an exception
-        if (footer == null) {
+        if (footer == null || adapterPosHere == adapterSize - 1) {
             stickyScrollMode = StickyScrollMode.SHOW_ON_SCROLL;
             return RecyclerView.NO_POSITION;
         } else {

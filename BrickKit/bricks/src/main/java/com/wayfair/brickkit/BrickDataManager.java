@@ -4,9 +4,11 @@
 package com.wayfair.brickkit;
 
 import android.content.Context;
+import android.os.Handler;
 import android.support.annotation.LayoutRes;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
@@ -239,6 +241,7 @@ public class BrickDataManager implements Serializable {
             computePaddingPosition(this.items.getFirst());
             brickRecyclerAdapter.safeNotifyItemRangeInserted(0, getRecyclerViewItems().size());
         }
+        updateBehaviours();
     }
 
     /**
@@ -255,6 +258,7 @@ public class BrickDataManager implements Serializable {
                 brickRecyclerAdapter.safeNotifyItemInserted(getRecyclerViewItems().size() - 1);
                 brickRecyclerAdapter.safeNotifyItemRangeChanged(refreshStartIndex, getRecyclerViewItems().size() - 1 - refreshStartIndex);
             }
+            updateBehaviours();
         }
     }
 
@@ -272,6 +276,7 @@ public class BrickDataManager implements Serializable {
                 brickRecyclerAdapter.safeNotifyItemInserted(0);
                 brickRecyclerAdapter.safeNotifyItemRangeChanged(1, getRecyclerViewItems().size() - 1);
             }
+            updateBehaviours();
         }
     }
 
@@ -291,6 +296,7 @@ public class BrickDataManager implements Serializable {
                 brickRecyclerAdapter.safeNotifyItemRangeInserted(index, visibleCount);
                 brickRecyclerAdapter.safeNotifyItemRangeChanged(refreshStartIndex, getRecyclerViewItems().size() - visibleCount - refreshStartIndex);
             }
+            updateBehaviours();
         }
     }
 
@@ -309,6 +315,7 @@ public class BrickDataManager implements Serializable {
                 brickRecyclerAdapter.safeNotifyItemRangeInserted(0, visibleCount);
                 brickRecyclerAdapter.safeNotifyItemRangeChanged(visibleCount, getRecyclerViewItems().size() - visibleCount);
             }
+            updateBehaviours();
         }
     }
 
@@ -351,6 +358,7 @@ public class BrickDataManager implements Serializable {
                 brickRecyclerAdapter.safeNotifyItemInserted(adapterIndex(item));
                 brickRecyclerAdapter.safeNotifyItemRangeChanged(refreshStartIndex, getRecyclerViewItems().size() - refreshStartIndex);
             }
+            updateBehaviours();
         }
     }
 
@@ -378,6 +386,7 @@ public class BrickDataManager implements Serializable {
                 brickRecyclerAdapter.safeNotifyItemRangeInserted(index, visibleCount);
                 brickRecyclerAdapter.safeNotifyItemRangeChanged(refreshStartIndex, getRecyclerViewItems().size() - visibleCount - refreshStartIndex);
             }
+            updateBehaviours();
         }
     }
 
@@ -403,6 +412,7 @@ public class BrickDataManager implements Serializable {
                 brickRecyclerAdapter.safeNotifyItemInserted(adapterIndex(item));
                 brickRecyclerAdapter.safeNotifyItemRangeChanged(refreshStartIndex, getRecyclerViewItems().size() - refreshStartIndex);
             }
+            updateBehaviours();
         }
     }
 
@@ -431,6 +441,7 @@ public class BrickDataManager implements Serializable {
                 brickRecyclerAdapter.safeNotifyItemRangeInserted(index, visibleCount);
                 brickRecyclerAdapter.safeNotifyItemRangeChanged(refreshStartIndex, getRecyclerViewItems().size() - visibleCount - refreshStartIndex);
             }
+            updateBehaviours();
         }
     }
 
@@ -452,6 +463,7 @@ public class BrickDataManager implements Serializable {
                     brickRecyclerAdapter.safeNotifyItemRangeChanged(refreshStartIndex, getRecyclerViewItems().size() - refreshStartIndex);
                 }
             }
+            updateBehaviours();
         }
     }
 
@@ -482,6 +494,7 @@ public class BrickDataManager implements Serializable {
             int refreshStartIndex = computePaddingPosition(getRecyclerViewItems().get(startPosition));
             brickRecyclerAdapter.safeNotifyItemRangeChanged(refreshStartIndex, getRecyclerViewItems().size() - refreshStartIndex);
         }
+        updateBehaviours();
     }
 
     /**
@@ -501,6 +514,7 @@ public class BrickDataManager implements Serializable {
 
                 brickRecyclerAdapter.safeNotifyDataSetChanged();
             }
+            updateBehaviours();
         }
     }
 
@@ -514,6 +528,7 @@ public class BrickDataManager implements Serializable {
         if (brickRecyclerAdapter != null) {
             brickRecyclerAdapter.safeNotifyItemRangeRemoved(0, startCount);
         }
+        updateBehaviours();
     }
 
     /**
@@ -535,6 +550,7 @@ public class BrickDataManager implements Serializable {
                     brickRecyclerAdapter.safeNotifyItemChanged(index);
                     brickRecyclerAdapter.safeNotifyItemRangeChanged(refreshStartIndex, getRecyclerViewItems().size() - refreshStartIndex);
                 }
+                updateBehaviours();
             }
         } else {
             if (replacement.isHidden()) {
@@ -547,6 +563,7 @@ public class BrickDataManager implements Serializable {
                     brickRecyclerAdapter.safeNotifyItemRemoved(index);
                     brickRecyclerAdapter.safeNotifyItemRangeChanged(refreshStartIndex, getRecyclerViewItems().size() - refreshStartIndex);
                 }
+                updateBehaviours();
             } else {
                 int dataIndex = items.indexOf(target);
                 if (dataIndex != -1) { // A double-tap can cause this
@@ -559,6 +576,7 @@ public class BrickDataManager implements Serializable {
                         brickRecyclerAdapter.safeNotifyItemInserted(adapterIndex);
                         brickRecyclerAdapter.safeNotifyItemRangeChanged(refreshStartIndex, getRecyclerViewItems().size() - refreshStartIndex);
                     }
+                    updateBehaviours();
                 }
             }
         }
@@ -595,6 +613,7 @@ public class BrickDataManager implements Serializable {
                     brickRecyclerAdapter.safeNotifyItemRangeChanged(refreshStartIndex, getRecyclerViewItems().size() - refreshStartIndex);
                 }
             }
+            updateBehaviours();
         }
     }
 
@@ -613,6 +632,7 @@ public class BrickDataManager implements Serializable {
                 brickRecyclerAdapter.safeNotifyItemInserted(index);
                 brickRecyclerAdapter.safeNotifyItemRangeChanged(refreshStartIndex, getRecyclerViewItems().size() - refreshStartIndex);
             }
+            updateBehaviours();
         }
     }
 
@@ -621,9 +641,6 @@ public class BrickDataManager implements Serializable {
      */
     private void dataHasChanged() {
         dataHasChanged = true;
-        for (BrickBehavior behavior : behaviors) {
-            behavior.onDataSetChanged();
-        }
     }
 
     /**
@@ -909,5 +926,11 @@ public class BrickDataManager implements Serializable {
             return getRecyclerViewItems().get(position);
         }
         return null;
+    }
+
+    private void updateBehaviours() {
+        for (BrickBehavior behavior : behaviors) {
+            behavior.onDataSetChanged();
+        }
     }
 }
